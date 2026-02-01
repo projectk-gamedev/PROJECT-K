@@ -11,8 +11,10 @@ size = Vector2(752, 20)
 [node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1743924135]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1543143983]
+modulate = Color(0.08235294, 0, 1, 1)
 position = Vector2(356, 0)
 shape = SubResource("RectangleShape2D_pq706")
+debug_color = Color(0.86167735, 0.34360835, 0.28821638, 1)
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=743942355]
 position = Vector2(538, 1.9999998)
@@ -22,7 +24,11 @@ scale = Vector2(9.3671875, 0.67187494)
 position = Vector2(35, -94)
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=861950668]
+offset = Vector2(0, -100)
+zoom = Vector2(2, 2)
+limit_smoothed = true
 position_smoothing_enabled = true
+rotation_smoothing_enabled = true
 
 [node name="training_dummy" parent="." unique_id=557953901 instance=ExtResource("2_5ebu0")]
 position = Vector2(562, -91)

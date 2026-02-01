@@ -4,11 +4,13 @@
 [ext_resource type="Texture2D" uid="uid://cg7e2a8sb2l2f" path="res://icon.svg" id="2_kjy6s"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_c73tx"]
+size = Vector2(140, 133)
 
 [node name="training_dummy" type="Area2D" unique_id=557953901]
 script = ExtResource("1_jjss5")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=843339127]
+position = Vector2(0, 0.5)
 shape = SubResource("RectangleShape2D_c73tx")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1909951196]
