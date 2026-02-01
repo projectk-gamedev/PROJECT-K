@@ -34,9 +34,12 @@ func state_idle_logic(delta):
 	_play_animation("idle")
 	
 	velocity.x = move_toward(velocity.x, 0, speed)
-	
-	if Input.get_axis("move_left", "move_right") != 0:
+	if Input.is_action_just_pressed("attack"): 
+		change_state(ATTACK)
+	elif Input.get_axis("move_left", "move_right") != 0:
 		change_state(RUN)
+	#if Input.get_axis("move_left", "move_right") != 0:
+		#change_state(RUN)
 	elif Input.is_action_just_pressed("jump") and is_on_floor():
 		change_state(JUMP)
 	elif not is_on_floor():
@@ -45,6 +48,10 @@ func state_idle_logic(delta):
 func state_run_logic(delta):
 	var direction = Input.get_axis("move_left", "move_right")
 	
+	if Input.is_action_just_pressed("attack"): 
+		change_state(ATTACK)
+	elif Input.get_axis("move_left", "move_right") != 0:
+		change_state(RUN)
 	if direction:
 		velocity.x = direction * speed
 		$AnimatedSprite2D.flip_h = direction < 0
@@ -72,10 +79,20 @@ func state_fall_logic(delta):
 		change_state(IDLE)
 
 func state_attack_logic(delta):
-	_play_animation("idle")
-	# (Your attack timer logic here...)
+	# 1. Freeze movement
+	velocity.x = move_toward(velocity.x, 0, speed)
+	
+	# 2. Turn ON the Hitbox
+	$SwordHitbox.monitoring = true
+	$AnimatedSprite2D.modulate = Color(1, 0, 0) # Red for feedback
+	
+	# 3. Wait for the swing to "finish"
+	await get_tree().create_timer(0.3).timeout 
+	
+	# 4. Turn OFF the Hitbox
+	$SwordHitbox.monitoring = false
+	$AnimatedSprite2D.modulate = Color(1, 1, 1)
 	change_state(IDLE)
-
 # --- THE HELPERS ---
 
 func change_state(new_state):
@@ -88,3 +105,8 @@ func _play_animation(anim_name: String):
 	# If it's NOT playing, start it.
 	if not $AnimatedSprite2D.is_playing() or $AnimatedSprite2D.animation != anim_name:
 		$AnimatedSprite2D.play(anim_name)
+
+func _on_sword_hitbox_area_entered(area):
+	# Check if what we hit has a "take_damage" function
+	if area.has_method("take_damage"):
+		area.take_damage()
