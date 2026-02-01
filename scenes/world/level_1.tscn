@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://cexpf3e7mxmb8"]
+
+[ext_resource type="PackedScene" uid="uid://bcf41cey8dxse" path="res://scenes/world/training_dummy.tscn" id="2_5ebu0"]
+[ext_resource type="PackedScene" uid="uid://dfdpdsmrxrk0p" path="res://scenes/player/player.tscn" id="2_638m0"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pq706"]
+size = Vector2(752, 20)
+
+[node name="World" type="Node2D" unique_id=323925653]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1743924135]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1543143983]
+position = Vector2(356, 0)
+shape = SubResource("RectangleShape2D_pq706")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=743942355]
+position = Vector2(538, 1.9999998)
+scale = Vector2(9.3671875, 0.67187494)
+
+[node name="Player" parent="." unique_id=715490983 instance=ExtResource("2_638m0")]
+position = Vector2(35, -94)
+
+[node name="Camera2D" type="Camera2D" parent="Player" unique_id=861950668]
+position_smoothing_enabled = true
+
+[node name="training_dummy" parent="." unique_id=557953901 instance=ExtResource("2_5ebu0")]
+position = Vector2(562, -91)
