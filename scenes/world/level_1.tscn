@@ -30,4 +30,5 @@ position_smoothing_enabled = true
 rotation_smoothing_enabled = true
 
 [node name="training_dummy" parent="." unique_id=557953901 instance=ExtResource("2_5ebu0")]
+texture_filter = 1
 position = Vector2(562, -91)
