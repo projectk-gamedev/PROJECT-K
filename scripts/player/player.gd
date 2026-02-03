@@ -84,47 +84,42 @@ func state_fall_logic(delta):
 		change_state(IDLE)
 
 func state_attack_logic(delta):
-	# 1. MOVEMENT LOGIC (Runs every frame)
+	# 1. MOVEMENT (Keep current speed but allow flipping)
 	var direction = Input.get_axis("move_left", "move_right")
 	if direction:
 		velocity.x = direction * speed
 		$AnimatedSprite2D.flip_h = direction < 0
+		# FIX: Move the hitbox to face the right way!
+		if has_node("SwordHitbox"):
+			$SwordHitbox.position.x = abs($SwordHitbox.position.x) * (direction)
 	else:
 		velocity.x = move_toward(velocity.x, 0, speed)
 
-	# 2. GHOST TIMER LOCK (Prevents spamming)
-	if is_attacking:
-		return
-
-	# 3. START ATTACK
-	is_attacking = true
-	_play_animation("attack_needle")
-	
-	# Try to enable hitbox if it exists, but don't crash if it's missing/misnamed
-	if has_node("SwordHitbox"):
-		$SwordHitbox.monitoring = true
-	elif has_node("Swordhitbox"):
-		$Swordhitbox.monitoring = true
-	
-	# Wait for animation
-	await get_tree().create_timer(0.4).timeout 
-	
-	# 4. FINISH
-	if has_node("SwordHitbox"):
-		$SwordHitbox.monitoring = false
-	elif has_node("Swordhitbox"):
-		$Swordhitbox.monitoring = false
+	# 2. START ATTACK (If not already mid-swing)
+	if not is_attacking:
+		is_attacking = true
+		_play_animation("attack_needle")
+		$AnimatedSprite2D.modulate = Color(1, 0, 0) # RESTORED: Visual feedback
 		
-	is_attacking = false
-	
-	# Check input to decide next state
-	var fresh_direction = Input.get_axis("move_left", "move_right")
-	if fresh_direction:
-		change_state(RUN)
-	else:
-		change_state(IDLE)
-
-# --- THE HELPERS ---
+		# 3. ENABLE HITBOX
+		if has_node("SwordHitbox"):
+			$SwordHitbox.monitoring = true
+		
+		# 4. SWING DURATION
+		await get_tree().create_timer(0.4).timeout 
+		
+		# 5. RESET EVERYTHING
+		if has_node("SwordHitbox"):
+			$SwordHitbox.monitoring = false
+		
+		$AnimatedSprite2D.modulate = Color(1, 1, 1) # RESTORED: Reset color
+		is_attacking = false
+		
+		# Return to appropriate state
+		if Input.get_axis("move_left", "move_right") != 0:
+			change_state(RUN)
+		else:
+			change_state(IDLE)
 
 func change_state(new_state):
 	current_state = new_state
@@ -139,5 +134,6 @@ func _play_animation(anim_name: String):
 
 # Make sure to connect this signal in the Editor later when you are ready!
 func _on_sword_hitbox_area_entered(area):
+	print("SWORD TOUCHED: ", area.name) # This will tell us IF a collision happened
 	if area.has_method("take_damage"):
 		area.take_damage()
