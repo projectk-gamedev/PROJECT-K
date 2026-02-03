@@ -138,7 +138,7 @@ shape = SubResource("RectangleShape2D_dovo2")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2113154062]
 texture_filter = 1
-position = Vector2(6.999998, -5.421011e-20)
+position = Vector2(0, -5.9604645e-08)
 scale = Vector2(1.3399998, 1.4475)
 sprite_frames = SubResource("SpriteFrames_je7p5")
 animation = &"attack_needle"

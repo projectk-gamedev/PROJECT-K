@@ -39,7 +39,7 @@ texture_filter = 1
 position = Vector2(361, -69)
 
 [node name="HollowGuard" parent="." unique_id=1451742702 instance=ExtResource("3_638m0")]
-position = Vector2(878, -56)
+position = Vector2(876, -57)
 
 [node name="bottom" type="Area2D" parent="." unique_id=830676813]
 collision_layer = 0
