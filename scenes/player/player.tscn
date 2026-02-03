@@ -5,13 +5,14 @@
 [ext_resource type="Texture2D" uid="uid://byb1wuk6ph8cb" path="res://assets/sprites/attack_needle.png" id="2_gmlin"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_dovo2"]
-radius = 63.0
-height = 126.0
+radius = 70.0
+height = 140.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gmlin"]
+size = Vector2(77, 89)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dovo2"]
-size = Vector2(107, 81)
+size = Vector2(76, 81)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_je7p5"]
 atlas = ExtResource("2_gmlin")
@@ -128,16 +129,17 @@ collision_layer = 0
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SwordHitbox" unique_id=335873283]
+position = Vector2(28.5, 5.5)
 shape = SubResource("RectangleShape2D_gmlin")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="." unique_id=1478527358]
-position = Vector2(38.5, 0.5)
+position = Vector2(23, 0.5)
 shape = SubResource("RectangleShape2D_dovo2")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2113154062]
 texture_filter = 1
-position = Vector2(-5.421011e-20, -5.421011e-20)
-scale = Vector2(1.2699999, 1.4475)
+position = Vector2(6.999998, -5.421011e-20)
+scale = Vector2(1.3399998, 1.4475)
 sprite_frames = SubResource("SpriteFrames_je7p5")
 animation = &"attack_needle"
 frame = 4

@@ -1,0 +1,47 @@
+[gd_scene format=3 uid="uid://btd3joqnkp2tb"]
+
+[ext_resource type="Script" uid="uid://bkud6sy74bcxs" path="res://scripts/other/hollow_guard.gd" id="1_4nexp"]
+[ext_resource type="Script" uid="uid://cal6n18v50u80" path="res://scripts/other/hurtbox.gd" id="2_2psnl"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4nexp"]
+size = Vector2(58, 93)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2psnl"]
+size = Vector2(70, 95)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7v1ap"]
+size = Vector2(83, 97)
+
+[node name="HollowGuard" type="CharacterBody2D" unique_id=1451742702]
+script = ExtResource("1_4nexp")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=927481829]
+offset_left = -28.0
+offset_top = -48.0
+offset_right = 30.0
+offset_bottom = 45.0
+color = Color(0.9600828, 0.54450834, 0.34534428, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2092295604]
+position = Vector2(2, -1.5)
+shape = SubResource("RectangleShape2D_4nexp")
+
+[node name="EdgeCheck" type="RayCast2D" parent="." unique_id=1942462704]
+
+[node name="Hurtbox" type="Area2D" parent="." unique_id=2054503197]
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("2_2psnl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox" unique_id=1419855005]
+position = Vector2(1, -1.5)
+shape = SubResource("RectangleShape2D_2psnl")
+
+[node name="ContactDamageArea" type="Area2D" parent="." unique_id=517855015]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ContactDamageArea" unique_id=440340776]
+position = Vector2(-0.5, -1.5)
+shape = SubResource("RectangleShape2D_7v1ap")
+
+[connection signal="body_entered" from="ContactDamageArea" to="." method="_on_contact_damage_area_body_entered"]

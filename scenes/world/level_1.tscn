@@ -2,9 +2,14 @@
 
 [ext_resource type="PackedScene" uid="uid://bcf41cey8dxse" path="res://scenes/world/training_dummy.tscn" id="2_5ebu0"]
 [ext_resource type="PackedScene" uid="uid://dfdpdsmrxrk0p" path="res://scenes/player/player.tscn" id="2_638m0"]
+[ext_resource type="PackedScene" uid="uid://btd3joqnkp2tb" path="res://scripts/other/hollow_guard.tscn" id="3_638m0"]
+[ext_resource type="Script" uid="uid://hfyb8n1nvto7" path="res://scenes/world/bottom.gd" id="4_ur07v"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pq706"]
-size = Vector2(752, 20)
+size = Vector2(1595, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0bk6a"]
+size = Vector2(4953, 55)
 
 [node name="World" type="Node2D" unique_id=323925653]
 
@@ -12,7 +17,7 @@ size = Vector2(752, 20)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1543143983]
 modulate = Color(0.08235294, 0, 1, 1)
-position = Vector2(356, 0)
+position = Vector2(371.5, 0)
 shape = SubResource("RectangleShape2D_pq706")
 debug_color = Color(0.86167735, 0.34360835, 0.28821638, 1)
 
@@ -31,4 +36,17 @@ rotation_smoothing_enabled = true
 
 [node name="training_dummy" parent="." unique_id=557953901 instance=ExtResource("2_5ebu0")]
 texture_filter = 1
-position = Vector2(562, -91)
+position = Vector2(361, -69)
+
+[node name="HollowGuard" parent="." unique_id=1451742702 instance=ExtResource("3_638m0")]
+position = Vector2(878, -56)
+
+[node name="bottom" type="Area2D" parent="." unique_id=830676813]
+collision_layer = 0
+script = ExtResource("4_ur07v")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="bottom" unique_id=147393614]
+position = Vector2(104, 1952.5)
+shape = SubResource("RectangleShape2D_0bk6a")
+
+[connection signal="body_entered" from="bottom" to="bottom" method="_on_body_entered"]

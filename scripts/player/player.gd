@@ -137,3 +137,25 @@ func _on_sword_hitbox_area_entered(area):
 	print("SWORD TOUCHED: ", area.name) # This will tell us IF a collision happened
 	if area.has_method("take_damage"):
 		area.take_damage()
+		
+# Inside player.gd
+# Inside player.gd - This MUST have 'source_pos' inside the brackets
+# Inside player.gd
+# Inside player.gd
+# Inside player.gd
+func take_damage(source_pos: Vector2): 
+	# The 'source_pos' above is the CRITICAL part. 
+	# It allows the Player to "catch" the position the Guard is sending.
+	
+	print("Player hit logic triggered!")
+	
+	# Knockback: Calculate direction away from the enemy
+	var knockback_dir = (global_position - source_pos).normalized()
+	velocity = knockback_dir * 600
+	move_and_slide()
+	
+	# Visual feedback: Flash the sprite white
+	if has_node("AnimatedSprite2D"):
+		$AnimatedSprite2D.modulate = Color(10, 10, 10)
+		await get_tree().create_timer(0.1).timeout
+		$AnimatedSprite2D.modulate = Color(1, 1, 1)
